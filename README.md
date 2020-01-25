@@ -1,5 +1,5 @@
-[![Bonsai Asset Badge](https://img.shields.io/badge/CHANGEME-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/CHANGEME/CHANGEME)[![TravisCI Build Status](https://travis-ci.org/CHANGEME/sensu-CHANGEME.svg?branch=master)
-](https://travis-ci.org/CHANGEME/sensu-CHANGEME)
+[![Bonsai Asset Badge](https://img.shields.io/badge/CHANGEME-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/CHANGEME/CHANGEME)[![TravisCI Build Status](https://travis-ci.org/jmasseoavio/sensu-go-mssql-check.svg?branch=master)
+](https://travis-ci.org/jmasseoavio/sensu-go-mssql-check)
 
 # Sensu Go MSSQL Check
 
@@ -37,7 +37,7 @@ It just returns 0/1/2 and outputs the times in InfluxDB metrics format.
 
   
 
-All configuration is via arguments or environment variables. -1 means those checks are disabled. If no checks are enabled, this is basically just a metrics check. All times are in nanos. So you probably want to specify warntime/crittime as 1000000000 for 1 second.
+All configuration is via arguments or environment variables. -1 means those checks are disabled. If no checks are enabled, this is just a metrics check. All times are in nanos. So you probably want to specify warntime/crittime as 1000000000 for 1 second.
 
   
 
@@ -79,11 +79,11 @@ Assets are the best way to make use of this plugin. If you're not using an asset
 
   
 
-`sensuctl asset add jmasseo/sensu-go-mssql-check:VERSION`
+`sensuctl asset add jmasseoavio/sensu-go-mssql-check:VERSION`
 
   
 
-If you're using an earlier version of sensuctl, you can find the asset on the [Bonsai Asset Index](https://bonsai.sensu.io/assets/jmasseo/sensu-go-mssql-check).
+If you're using an earlier version of sensuctl, you can find the asset on the [Bonsai Asset Index](https://bonsai.sensu.io/assets/jmasseoavio/sensu-go-mssql-check).
 
   
 
@@ -161,13 +161,9 @@ Should run fine. :)
 
   
 
-The preferred way of installing and deploying this plugin is to use it as an [asset]. If you would like to compile and install the plugin from source or contribute to it, download the latest version from [releases][1] or create an executable script from this source.
-
-  
+The preferred way of installing and deploying this plugin is to use it as an [asset]. If you would like to compile and install from source or contribute to it, download the latest version from [releases][1] or create an executable from this source.
 
 From the local path of the sensu-go-mssql-check repository:
-
-  
 
 ```
 
@@ -177,7 +173,7 @@ go build -o /usr/local/bin/sensu-go-mssql-check main.go
 
 For more information about contributing to this plugin, see https://github.com/sensu/sensu-go/blob/master/CONTRIBUTING.md
 
-[1]: https://github.com/jmasseo/sensu-go-mssql-check/releases
+[1]: https://github.com/jmasseoavio/sensu-go-mssql-check/releases
 
 [2]: #asset-registration
 
