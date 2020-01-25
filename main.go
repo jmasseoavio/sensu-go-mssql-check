@@ -113,12 +113,7 @@ func run(cmd *cobra.Command, args []string) error {
 	for rows.Next() {
 		rowcount++
 	}
-	// var somenumber int64
-	// var somechars string
-	// err = rows.Scan(&somenumber, &somechars)
-	// if err != nil {
-	// 	log.Fatal("Scan failed:", err.Error())
-	// }
+
 	endtime := time.Now()
 	querytime := endtime.Sub(start2time)
 	endtoendtime := endtime.Sub(starttime)
@@ -143,31 +138,6 @@ func run(cmd *cobra.Command, args []string) error {
 		}
 	}
 	os.Exit(rc)
-	//fmt.Printf("Times: %s %s %s %s %s %d", starttime, start2time, start3time, start4time, endtime, endtime.Sub(starttime))
 
-	// if stdin == nil {
-	// 	stdin = os.Stdin
-	// }
-
-	// eventJSON, err := ioutil.ReadAll(stdin)
-	// if err != nil {
-	// 	return fmt.Errorf("failed to read stdin: %s", err)
-	// }
-
-	// event := &types.Event{}
-	// err = json.Unmarshal(eventJSON, event)
-	// if err != nil {
-	// 	return fmt.Errorf("failed to unmarshal stdin data: %s", err)
-	// }
-
-	// if err = event.Validate(); err != nil {
-	// 	return fmt.Errorf("failed to validate event: %s", err)
-	// }
-
-	// if !event.HasCheck() {
-	// 	return fmt.Errorf("event does not contain check")
-	// }
-
-	//return exampleAction(event)
 	return nil
 }
