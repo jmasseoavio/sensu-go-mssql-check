@@ -61,7 +61,6 @@ func configureRootCommand() *cobra.Command {
 		EnvOrDefault("MSSQL_CHECK_CONNSTRING", ""),
 		"MSSQL Connection String (MSSQL_CHECK_CONNSTRING)")
 
-	_ = cmd.MarkFlagRequired("connstring")
 	cmd.Flags().StringVarP(&queryString,
 		"querystring",
 		"q",
@@ -94,7 +93,9 @@ func run(cmd *cobra.Command, args []string) error {
 		//_ = cmd.Help()
 		return fmt.Errorf("invalid argument(s) received")
 	}
-
+	if connString == "" {
+		return fmt.Errorf("connString not set.")
+	}
 	starttime := time.Now()
 	conn, err := sql.Open("mssql", connString)
 	if err != nil {
