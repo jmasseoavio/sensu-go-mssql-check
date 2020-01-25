@@ -19,6 +19,10 @@ var (
 	warntime    int
 	crittime    int
 	desiredrows int
+	port        int
+	user        string
+	password    string
+	server      string
 )
 
 func EnvOrDefault(env string, defval string) string {
@@ -61,6 +65,24 @@ func configureRootCommand() *cobra.Command {
 		EnvOrDefault("MSSQL_CHECK_CONNSTRING", ""),
 		"MSSQL Connection String (MSSQL_CHECK_CONNSTRING)")
 
+	cmd.Flags().StringVarP(&user,
+		"user",
+		"u",
+		EnvOrDefault("MSSQL_USER", ""),
+		"MSSQL User (MSSQL_USER)")
+
+	cmd.Flags().StringVarP(&password,
+		"password",
+		"p",
+		EnvOrDefault("MSSQL_PASSWORD", ""),
+		"MSSQL Password (MSSQL_PASSWORD)")
+
+	cmd.Flags().StringVarP(&server,
+		"server",
+		"s",
+		EnvOrDefault("MSSQL_SERVER", ""),
+		"MSSQL Server (MSSQL_SERVER)")
+
 	cmd.Flags().StringVarP(&queryString,
 		"querystring",
 		"q",
@@ -85,6 +107,12 @@ func configureRootCommand() *cobra.Command {
 		EnvOrDefaultI("MSSQL_CHECK_DESIREDROWS", -1),
 		"MSSQL Query Desired Rows (MSSQL_CHECK_DESIREDROWS)")
 
+	cmd.Flags().IntVarP(&port,
+		"port",
+		"P",
+		EnvOrDefaultI("MSSQL_PORT", 1433),
+		"MSSQL Port Number (MSSQL_PORT)")
+
 	return cmd
 }
 
@@ -93,8 +121,11 @@ func run(cmd *cobra.Command, args []string) error {
 		//_ = cmd.Help()
 		return fmt.Errorf("invalid argument(s) received")
 	}
+	if connString == "" && server == "" {
+		return fmt.Errorf("Connection not configured.  Please supply server or connString at minimum.")
+	}
 	if connString == "" {
-		return fmt.Errorf("connString not set.")
+		connString = fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d", server, user, password, port)
 	}
 	starttime := time.Now()
 	conn, err := sql.Open("mssql", connString)
