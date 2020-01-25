@@ -23,6 +23,7 @@ var (
 	user        string
 	password    string
 	server      string
+	debug       bool
 )
 
 func EnvOrDefault(env string, defval string) string {
@@ -113,6 +114,11 @@ func configureRootCommand() *cobra.Command {
 		EnvOrDefaultI("MSSQL_PORT", 1433),
 		"MSSQL Port Number (MSSQL_PORT)")
 
+	cmd.Flags().BoolVarP(&debug,
+		"debug",
+		"d",
+		false,
+		"Debug")
 	return cmd
 }
 
@@ -141,6 +147,9 @@ func run(cmd *cobra.Command, args []string) error {
 	}
 	defer stmt.Close()
 	rows, err := stmt.Query()
+	if err != nil {
+		log.Fatal("Query Failed:", err.Error())
+	}
 	rowcount := 0
 	for rows.Next() {
 		rowcount++
@@ -149,6 +158,9 @@ func run(cmd *cobra.Command, args []string) error {
 	endtime := time.Now()
 	querytime := endtime.Sub(start2time)
 	endtoendtime := endtime.Sub(starttime)
+	if debug == true {
+		fmt.Printf("Conn: %s\nQuery: %s\n", connString, queryString)
+	}
 	fmt.Printf("mssql rows=%d,open=%d,query=%d,endtoend=%d %d\n", rowcount, opentime, querytime, endtoendtime, endtime.UnixNano())
 	rc := 0
 	if desiredrows >= 0 {
